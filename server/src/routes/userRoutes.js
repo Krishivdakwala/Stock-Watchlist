@@ -62,7 +62,11 @@ router.post("/login", async (req, res) => {
       "stock-watchlist"
     );
 
-    return res.json({ status: "ok", msg: "user logged in", token: token });
+    return res.json({
+      status: "ok",
+      msg: "user logged in",
+      data: { userId: user._id, token: token },
+    });
   }
 
   res.json({ status: "error", error: "Invalid username/password" });
