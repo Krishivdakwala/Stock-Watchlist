@@ -9,9 +9,11 @@ app.use(express.json());
 
 const userRoutes = require("./routes/userRoutes");
 const watchlistRoutes = require("./routes/watchlistRoutes");
+const alertRoutes = require("./routes/alertRoutes");
 
 app.use("/user", userRoutes);
 app.use("/watchlist", watchlistRoutes);
+app.use("/alert", alertRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Working");
