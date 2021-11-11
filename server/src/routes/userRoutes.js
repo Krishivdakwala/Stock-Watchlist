@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require("../models/user_model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { alertMail } = require("../alerts/alert");
 
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -61,6 +62,8 @@ router.post("/login", async (req, res) => {
       },
       "stock-watchlist"
     );
+
+    alertMail(user.email, user.name);
 
     return res.json({
       status: "ok",
