@@ -5,25 +5,24 @@ import Landing from "./pages/Landing";
 import Markets from "./pages/Markets";
 import Watchlist from "./pages/Watchlist";
 import ViewWatchlists from "./pages/ViewWatchlists";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
+import LoginScreen from "./pages/LoginScreen/LoginScreen";
+import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
+import Main from "./pages/Main";
 
 const App = () => {
   return (
-    <div>
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/markets" component={Markets} />
-            <Route exact path="/watchlist" component={Watchlist} />
-            <Route exact path="/viewWatchlists" component={ViewWatchlists} />
-          </Switch>
-        </div>
-      </Router>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route exact path="/register" component={RegisterScreen} />
+          <Route exact path="/login" component={LoginScreen} />
+          <Route exact path="/markets" component={Markets} />
+          <Route exact path="/watchlist" component={Watchlist} />
+          <Route exact path="/viewWatchlists" component={ViewWatchlists} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
