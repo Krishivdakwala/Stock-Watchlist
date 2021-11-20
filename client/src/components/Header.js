@@ -38,8 +38,10 @@ const Header = ({ setSearch }) => {
                 >
                   <NavDropdown.Item>
                     <img
-                      alt=""
-                      src={`${userInfo.pic}`}
+                      alt=".."
+                      src={
+                        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                      }
                       width="25"
                       height="25"
                       style={{ marginRight: 10 }}

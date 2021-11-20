@@ -1,8 +1,4 @@
-const {
-  authUser,
-  registerUser,
-  updateUserProfile,
-} = require("../controllers/userControllers");
+const { authUser, registerUser } = require("../controllers/userControllers");
 
 // const { protect } = require("../middleware/authMiddleware");
 
