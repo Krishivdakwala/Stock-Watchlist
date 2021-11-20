@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import Loading from "../../components/Loading";
-// import ErrorMessage from "../../components/ErrorMessage";
-// import { login } from "../../actions/userActions";
+import Loading from "../../components/Loading";
+import Error from "../../components/Error";
+import { login } from "../../actions/userActions";
 // import MainScreen from "../../components/MainScreen";
 import "./LoginScreen.css";
 
@@ -12,27 +12,27 @@ const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //   const dispatch = useDispatch();
-  //   const userLogin = useSelector((state) => state.userLogin);
-  //   const { loading, error, userInfo } = userLogin;
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       history.push("/mynotes");
-  //     }
-  //   }, [history, userInfo]);
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/mynotes");
+    }
+  }, [history, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch(login(email, password));
-    console.log(email, password);
+    dispatch(login(email, password));
+    // console.log(email, password);
   };
 
   return (
     // <MainScreen title="LOGIN">
     <div className="loginContainer">
-      {/* {error && <Error variant="danger">{error}</Error>}
-        {loading && <Loading />} */}
+      {error && <Error variant="danger">{error}</Error>}
+      {loading && <Loading />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
