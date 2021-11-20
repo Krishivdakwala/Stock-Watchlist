@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 
 import { NavLink, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Main = () => {
+const Main = ({ history }) => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/markets");
+    }
+  }, [history, userInfo]);
   return (
     <div>
       <h2>This is landing screen</h2>

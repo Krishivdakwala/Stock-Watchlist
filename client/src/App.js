@@ -9,20 +9,24 @@ import ViewWatchlists from "./pages/ViewWatchlists";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import Main from "./pages/Main";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
     <Router>
+      <Header />
       <div className="App">
         <Switch>
           <Route exact path="/" component={Main} />
           <Route exact path="/register" component={RegisterScreen} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/markets" component={Markets} />
-          <Route exact path="/watchlist" component={Watchlist} />
+          <Route exact path="/watchlists" component={Watchlist} />
           <Route exact path="/viewWatchlists" component={ViewWatchlists} />
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 };

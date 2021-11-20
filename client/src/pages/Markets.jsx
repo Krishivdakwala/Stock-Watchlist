@@ -1,10 +1,14 @@
 import React from "react";
 
+import MainScreen from "../components/MainScreen";
+
 const Markets = () => {
   return (
-    <div>
-      <h1>Markets Here</h1>
-    </div>
+    <MainScreen title="Markets">
+      <div>
+        <h1>Markets Data Here</h1>
+      </div>
+    </MainScreen>
   );
 };
 

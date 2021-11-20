@@ -24,7 +24,7 @@ const Landing = () => {
         </NavLink>
         <HeaderContent>
           <HeaderH1>Website Name</HeaderH1>
-          <NavLink to={"/signup"}>
+          <NavLink to={"/register"}>
             <HeaderBtn>Sign Up</HeaderBtn>
           </NavLink>
         </HeaderContent>
