@@ -9,10 +9,12 @@ app.use(express.json());
 
 const usersRoutes = require("./routes/usersRoutes");
 const watchlistsRoutes = require("./routes/watchlistsRoutes");
+const marketsRoutes = require("./routes/marketsRoutes");
 const alertRoutes = require("./routes/alertRoutes");
 
 app.use("/users", usersRoutes);
 app.use("/watchlists", watchlistsRoutes);
+app.use("/markets", marketsRoutes);
 app.use("/alert", alertRoutes);
 
 app.get("/", (req, res) => {
