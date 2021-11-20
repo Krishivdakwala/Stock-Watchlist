@@ -7,16 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const userRoutes = require("./routes/userRoutes");
+const usersRoutes = require("./routes/usersRoutes");
 const watchlistRoutes = require("./routes/watchlistRoutes");
 const alertRoutes = require("./routes/alertRoutes");
-const usersRoutes = require("./routes/usersRoutes");
-
-app.use("/user", userRoutes);
-app.use("/watchlist", watchlistRoutes);
-app.use("/alert", alertRoutes);
 
 app.use("/users", usersRoutes);
+app.use("/watchlist", watchlistRoutes);
+app.use("/alert", alertRoutes);
 
 // Error Handling middlewares
 app.use(notFound);

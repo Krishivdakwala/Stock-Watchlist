@@ -60,6 +60,4 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-const updateUserProfile = () => {};
-
-module.exports = { authUser, updateUserProfile, registerUser };
+module.exports = { authUser, registerUser };
