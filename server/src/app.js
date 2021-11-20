@@ -15,12 +15,12 @@ app.use("/users", usersRoutes);
 app.use("/watchlists", watchlistsRoutes);
 app.use("/alert", alertRoutes);
 
-// Error Handling middlewares
-app.use(notFound);
-app.use(errorHandler);
-
 app.get("/", (req, res) => {
   res.send("API Working");
 });
+
+// Error Handling middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;

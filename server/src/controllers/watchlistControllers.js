@@ -10,14 +10,18 @@ const createWatchlist = asyncHandler(async (req, res) => {
       stocks: [],
     });
 
-    res.send({
-      status: "ok",
-      msg: "watchlist created",
-      data: {
-        userId: userId,
-        watchlistName: watchlistName,
-      },
-    });
+    if (response) {
+      res.send({
+        status: "ok",
+        msg: "watchlist created",
+        data: {
+          userId: userId,
+          watchlistName: watchlistName,
+        },
+      });
+    } else {
+      res.send({ status: "error", msg: "error while creating watchlist" });
+    }
 
     console.log("Watchlist Created : ", response);
   } catch (err) {
@@ -39,13 +43,17 @@ const getWatchlists = asyncHandler(async (req, res) => {
       name: watchlistName,
     });
 
-    res.send({
-      status: "ok",
-      msg: "watchlist fetched",
-      data: {
-        watchlist: watchlist,
-      },
-    });
+    if (response) {
+      res.send({
+        status: "ok",
+        msg: "watchlist fetched",
+        data: {
+          watchlist: watchlist,
+        },
+      });
+    } else {
+      res.send({ status: "rrror", msg: "error while fetching watchlists" });
+    }
 
     console.log("Watchlist Fetched : ", watchlist);
   } catch (err) {
@@ -65,16 +73,19 @@ const clearWatchlist = asyncHandler(async (req, res) => {
       }
     );
 
-    res.send({
-      status: "ok",
-      msg: "watchlist cleared",
-      data: {
-        userId: userId,
-        watchlistName: watchlistName,
-      },
-    });
-
-    console.log("Watchlist Cleared ");
+    if (response) {
+      res.send({
+        status: "ok",
+        msg: "watchlist cleared",
+        data: {
+          userId: userId,
+          watchlistName: watchlistName,
+        },
+      });
+      console.log("Watchlist Cleared ");
+    } else {
+      res.send({ status: "Error", msg: "error while clearing watchlist" });
+    }
   } catch (err) {
     res.send({ status: "err", msg: err });
   }
@@ -83,17 +94,21 @@ const clearWatchlist = asyncHandler(async (req, res) => {
 const deleteWatchlist = asyncHandler(async (req, res) => {
   const { userId, watchlistName } = req.body;
   try {
-    const watchlist = await Watchlist.findOneAndDelete({
+    const response = await Watchlist.findOneAndDelete({
       userId: userId,
       name: watchlistName,
     });
 
-    res.send({
-      status: "ok",
-      msg: "watchlist deleted",
-    });
+    if (response) {
+      res.send({
+        status: "ok",
+        msg: "watchlist deleted",
+      });
 
-    console.log("Watchlist Deleted ");
+      console.log("Watchlist Deleted ");
+    } else {
+      res.send({ status: "Error", msg: "error while removing stock" });
+    }
   } catch (err) {
     res.send({ status: "err", msg: err });
   }
@@ -121,7 +136,6 @@ const addStock = asyncHandler(async (req, res) => {
           stockId: stockId,
         },
       });
-
       console.log("Stock Added");
     } else {
       res.send({ status: "Error", msg: "error while adding stock" });
