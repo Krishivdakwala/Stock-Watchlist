@@ -8,11 +8,11 @@ app.use(cors());
 app.use(express.json());
 
 const usersRoutes = require("./routes/usersRoutes");
-const watchlistRoutes = require("./routes/watchlistRoutes");
+const watchlistsRoutes = require("./routes/watchlistsRoutes");
 const alertRoutes = require("./routes/alertRoutes");
 
 app.use("/users", usersRoutes);
-app.use("/watchlist", watchlistRoutes);
+app.use("/watchlists", watchlistsRoutes);
 app.use("/alert", alertRoutes);
 
 // Error Handling middlewares

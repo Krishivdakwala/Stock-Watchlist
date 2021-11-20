@@ -2,36 +2,26 @@ const mongoose = require("mongoose");
 
 const watchlistSchema = mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
     name: {
       type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
       unique: true,
-    },
-    password: {
-      type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    pic: {
-      type: String,
-      required: true,
-      default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    stocks: {
+      type: Array,
+      default: [],
     },
   },
+  { collection: "watchlists" },
   {
     timestamps: true,
   }
 );
 
-const Watchlist = mongoose.model("User", watchlistSchema);
+const Watchlist = mongoose.model("Watchlist", watchlistSchema);
 
 module.exports = Watchlist;
