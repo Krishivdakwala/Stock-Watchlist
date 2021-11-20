@@ -37,25 +37,32 @@ const createWatchlist = asyncHandler(async (req, res) => {
 
 const getWatchlists = asyncHandler(async (req, res) => {
   const { userId, watchlistName } = req.body;
+
   try {
-    const watchlist = await Watchlist.findOne({
-      userId: userId,
-      name: watchlistName,
-    });
+    let response;
+    if (watchlistName != undefined) {
+      response = await Watchlist.findOne({
+        userId: userId,
+        name: watchlistName,
+      });
+    } else {
+      response = await Watchlist.find({
+        userId: userId,
+      });
+    }
 
     if (response) {
       res.send({
         status: "ok",
         msg: "watchlist fetched",
         data: {
-          watchlist: watchlist,
+          watchlist: response,
         },
       });
+      console.log("Watchlist Fetched : ", response);
     } else {
-      res.send({ status: "rrror", msg: "error while fetching watchlists" });
+      res.send({ status: "error", msg: "error while fetching watchlists" });
     }
-
-    console.log("Watchlist Fetched : ", watchlist);
   } catch (err) {
     res.send({ status: "err", msg: err });
   }
