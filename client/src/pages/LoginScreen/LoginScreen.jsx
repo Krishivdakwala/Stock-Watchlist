@@ -31,7 +31,7 @@ const LoginScreen = ({ history }) => {
   return (
     // <MainScreen title="LOGIN">
     <div className="loginContainer">
-      {/* {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {/* {error && <Error variant="danger">{error}</Error>}
         {loading && <Loading />} */}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="formBasicEmail">
@@ -60,7 +60,7 @@ const LoginScreen = ({ history }) => {
       </Form>
       <Row className="py-3">
         <Col>
-          New Customer ? <Link to="/register">Register Here</Link>
+          New User ? <Link to="/register">Register Here</Link>
         </Col>
       </Row>
     </div>
