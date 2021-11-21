@@ -31,11 +31,6 @@ function getModalStyle() {
   };
 }
 
-const submitHandler = (e) => {
-  e.preventDefault();
-  console.log("Created");
-};
-
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -78,6 +73,42 @@ const Watchlist = () => {
     fetchWatchlists();
   }, []);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log("Created", watchlistName);
+    await axiosApi
+      .post("/watchlists/create", {
+        userId: "6198bffdee0f932f1901c02f",
+        watchlistName: watchlistName,
+      })
+      .then((response) => {
+        console.log(response);
+        handleClose();
+        fetchWatchlists();
+      })
+      .catch((error) => {
+        console.log(`Errors : ${error}`);
+        alert(error);
+      });
+  };
+
+  const deleteHandler = async (name) => {
+    console.log("Deleting", name);
+    await axiosApi
+      .delete("/watchlists/delete", {
+        userId: "6198bffdee0f932f1901c02f",
+        watchlistName: name,
+      })
+      .then((response) => {
+        console.log(response);
+        fetchWatchlists();
+      })
+      .catch((error) => {
+        console.log(`Errors : ${error}`);
+        alert(error);
+      });
+  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -86,23 +117,6 @@ const Watchlist = () => {
     setOpen(false);
   };
 
-  let content = [
-    {
-      title: "Watch List 1",
-      cardContent: "",
-      path: "/watchlist",
-    },
-    {
-      title: "Watch List 2",
-      cardContent: "",
-      path: "/viewWatchlists",
-    },
-    {
-      title: "Watch List 3",
-      cardContent: "",
-      path: "/viewWatchlists",
-    },
-  ];
   return (
     <MainScreen title="Watchlists">
       <Fade>
@@ -123,14 +137,16 @@ const Watchlist = () => {
         >
           <div style={modalStyle} className={classes.paper}>
             <h2>Enter Watchlist Name</h2>
-            <Form onSubmit={(submitHandler, handleClose)}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Control
-                  value={watchlistName}
-                  placeholder="Watchlist Name"
-                  onChange={(e) => setWatchlistName(e.target.value)}
-                />
-              </Form.Group>
+
+            <Form onSubmit={submitHandler}>
+              <Form.Control
+                value={watchlistName}
+                placeholder="Watchlist Name"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setWatchlistName(e.target.value);
+                }}
+              />
               <br />
               <Button variant="primary" type="submit">
                 Create
@@ -192,21 +208,20 @@ const Watchlist = () => {
                     }}
                     whileHover={{ backgroundColor: "#02203C" }}
                   >
-                    <Link
+                    {/* <Link
                       to={{
                         pathname: `/watchlists/view`,
                         state: {
                           stocks: item.stocks,
-                          data: 123,
                         },
                       }}
                       style={{ textDecoration: "inherit" }}
-                    >
-                      <div style={{ width: "270px" }}>
-                        <h2>{item.name}</h2>
-                        <p>{item.userId}</p>
-                      </div>
-                    </Link>
+                    > */}
+                    <div style={{ width: "270px" }}>
+                      <h2>{item.name}</h2>
+                      <p>{item.userId}</p>
+                    </div>
+                    {/* </Link> */}
                   </motion.div>
 
                   <div
@@ -218,17 +233,18 @@ const Watchlist = () => {
                     }}
                   >
                     <Link
-                      to={item.path}
-                      style={{
-                        textDecoration: "none",
-                        color: "#C51162",
-                        margin: "5px",
+                      to={{
+                        pathname: `/watchlists/view`,
+                        state: {
+                          stocks: item.stocks,
+                        },
                       }}
+                      style={{ textDecoration: "inherit" }}
                     >
                       <EditIcon />
                     </Link>
-                    <Link
-                      to={item.path2}
+                    <Button
+                      onClick={() => deleteHandler(item.name)}
                       style={{
                         textDecoration: "none",
                         color: "#303F9F",
@@ -236,7 +252,7 @@ const Watchlist = () => {
                       }}
                     >
                       <DeleteIcon />
-                    </Link>
+                    </Button>
                   </div>
                 </motion.div>
               );
