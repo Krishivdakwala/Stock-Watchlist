@@ -10,6 +10,7 @@ import Main from "./pages/Main";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ViewWatchlist from "./pages/WatchlistScreen/ViewWatchlist";
+import NewsScreen from "./pages/NewsScreen/NewsScreen";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route exact path="/register" component={RegisterScreen} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/markets" component={Markets} />
+          <Route exact path="/news" component={NewsScreen} />
           <Route exact path="/watchlists/view" component={ViewWatchlist} />
           <Route exact path="/watchlists" component={Watchlist} />
         </Switch>

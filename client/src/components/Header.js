@@ -29,6 +29,7 @@ const Header = ({ setSearch }) => {
 
           <Nav>
             <Nav.Link href="/markets">Markets</Nav.Link>
+            <Nav.Link href="/news">News</Nav.Link>
             {userInfo ? (
               <>
                 <Nav.Link href="/watchlists">Watchlists</Nav.Link>
