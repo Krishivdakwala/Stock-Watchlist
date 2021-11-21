@@ -8,6 +8,81 @@ var transporter = nodemailer.createTransport({
   },
 });
 
+const welcomeMail = (email, name) => {
+  var mailOptions = {
+    from: "entrepreneur2021auction@gmail.com",
+    to: "akash213kulkarni@gmail.com",
+    subject: "Welcome OnBoard !!",
+    html: `
+      <div>
+        <h1>Hello ${name}</h1>
+
+        <h2>Akash Kulkarni</h2>
+
+        <h4> Happy Investing </h4>
+      </div>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
+const newsMail = (email, name) => {
+  var mailOptions = {
+    from: "entrepreneur2021auction@gmail.com",
+    to: "akash213kulkarni@gmail.com",
+    subject: "Welcome OnBoard !!",
+    html: `
+      <div>
+        <h1>Hello ${name}</h1>
+
+        <h2>Akash Kulkarni</h2>
+
+        <h4> Happy Investing </h4>
+      </div>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
+const watchlistMail = (email, name) => {
+  var mailOptions = {
+    from: "entrepreneur2021auction@gmail.com",
+    to: "akash213kulkarni@gmail.com",
+    subject: "Welcome OnBoard !!",
+    html: `
+      <div>
+        <h1>Hello ${name}</h1>
+
+        <h2>Akash Kulkarni</h2>
+
+        <h4> Happy Investing </h4>
+      </div>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
 const alertMail = (email, name) => {
   var mailOptions = {
     from: "entrepreneur2021auction@gmail.com",
@@ -34,5 +109,8 @@ const alertMail = (email, name) => {
 };
 
 module.exports = {
+  welcomeMail,
+  newsMail,
+  watchlistMail,
   alertMail,
 };

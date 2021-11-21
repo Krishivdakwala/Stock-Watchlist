@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { welcomeMail } = require("../alerts/alert");
 const User = require("../models/userModel");
 const generateToken = require("../utils/generateToken");
 
@@ -51,6 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
+    welcomeMail(email, name);
   } else {
     res.status(400);
     throw new Error("User not found");
