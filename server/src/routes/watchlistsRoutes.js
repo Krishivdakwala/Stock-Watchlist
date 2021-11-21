@@ -12,7 +12,7 @@ const {
 } = require("../controllers/watchlistControllers");
 
 router.route("/create").post(createWatchlist);
-router.route("/view").get(getWatchlists);
+router.route("/view").post(getWatchlists);
 router.route("/clear").post(clearWatchlist);
 router.route("/delete").delete(deleteWatchlist);
 

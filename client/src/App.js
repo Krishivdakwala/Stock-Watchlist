@@ -1,15 +1,15 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Landing from "./pages/Landing";
+
 import Markets from "./pages/Markets";
-import Watchlist from "./pages/Watchlist";
-import ViewWatchlists from "./pages/ViewWatchlists";
+import Watchlist from "./pages/WatchlistScreen/Watchlist";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import Main from "./pages/Main";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ViewWatchlist from "./pages/WatchlistScreen/ViewWatchlist";
 
 const App = () => {
   return (
@@ -21,8 +21,8 @@ const App = () => {
           <Route exact path="/register" component={RegisterScreen} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/markets" component={Markets} />
+          <Route exact path="/watchlists/view" component={ViewWatchlist} />
           <Route exact path="/watchlists" component={Watchlist} />
-          <Route exact path="/viewWatchlists" component={ViewWatchlists} />
         </Switch>
       </div>
       <Footer />
