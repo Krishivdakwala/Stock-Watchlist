@@ -1,6 +1,6 @@
 const express = require("express");
 const Stock = require("../models/stockModel");
-const { getStockData } = require("../utils/stockAPI");
+const { getStockData, searchStock } = require("../utils/stockAPI");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -8,19 +8,21 @@ router.get("/", async (req, res) => {
   res.send(data);
 });
 
-router.get("/fetch", async (req, res) => {
+router.get("/find/:stock?", async (req, res) => {
   try {
-    const stockData = await getStockData(stocks[i].toString());
-    console.log(stockData);
+    var stockData = await searchStock(req.params.stock.toString());
+    res.send({ searchedFor: "req.params.stock", matches: stockData });
   } catch (e) {
     console.log(e);
   }
-  res.send(stockData);
 });
 
 router.get("/data/:set?", async (req, res) => {
-  const stocks1 = ["RELIANCE", "HDFC", "SBIN", "TCS", "INFY"];
-  const stocks2 = ["IRCTC", "SUNPHARMA", "MUTHOOTFIN", "TATAMOTORS", "IDEA"];
+  const stocks1 = ["RELIANCE", "TATAMOTORS", "TITAN", "ITC", "ADANIENT"];
+  const stocks2 = ["HDFC", "SBIN", "KOTAKBANK", "AXISBANK", "ICICIBANK"];
+  const stocks3 = ["TCS", "INFY", "HCLTECH", "TECHM"];
+  const stocks4 = ["BHARTIARTL", "IDEA", "RCOM"];
+  const stocks5 = ["SUNPHARMA", "DRREDDY", "BIOCON"];
 
   var stocks = [];
   switch (req.params.set) {
@@ -29,6 +31,15 @@ router.get("/data/:set?", async (req, res) => {
       break;
     case "2":
       stocks = stocks2;
+      break;
+    case "3":
+      stocks = stocks3;
+      break;
+    case "4":
+      stocks = stocks4;
+      break;
+    case "5":
+      stocks = stocks5;
       break;
     default:
       stocks = stocks1;
@@ -40,7 +51,7 @@ router.get("/data/:set?", async (req, res) => {
   for (var i in stocks) {
     var stockData;
     stockData = await getStockData(stocks[i].toString());
-    console.log(stockData["Meta Data"]);
+    // console.log(stockData["Meta Data"]);
 
     // fetch the market active dates
     const stockDates = [];
