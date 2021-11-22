@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const Stock = require("../models/stockModel");
 const Watchlist = require("../models/watchlistModel");
 
 const createWatchlist = asyncHandler(async (req, res) => {
@@ -50,6 +51,8 @@ const getWatchlists = asyncHandler(async (req, res) => {
         userId: userId,
       });
     }
+
+    console.log(response);
 
     if (response) {
       res.send({
@@ -152,16 +155,20 @@ const addStock = asyncHandler(async (req, res) => {
   }
 });
 
-const getStocks = asyncHandler(async (req, res) => {
-  const { userId, watchlistName } = req.body;
+const getStock = asyncHandler(async (stockId) => {
+  // const { stockId } = req.body;
 
   try {
-    res.send("opopopopopop");
-  } catch (e) {
-    res.send({
-      status: "err",
-      msg: err,
-    });
+    const stockData = await Stock.findById(stockId);
+
+    if (stockData) {
+      console.log("Stocks Fetched");
+      return stockData;
+    } else {
+      return "error while fetching stocks";
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -207,6 +214,6 @@ module.exports = {
   clearWatchlist,
   deleteWatchlist,
   addStock,
-  getStocks,
+  getStock,
   removeStock,
 };

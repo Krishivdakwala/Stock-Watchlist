@@ -3,15 +3,24 @@ const Stock = require("../models/stockModel");
 const { getStockData, searchStock } = require("../utils/stockAPI");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const data = await Stock.find();
-  res.send(data);
+router.get("/:stockId?", async (req, res) => {
+  try {
+    var stockData;
+
+    stockData = await Stock.find();
+    if (req.params.stockId) {
+      stockData = await Stock.findById(req.params.stockId);
+    }
+    res.send({ data: stockData });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get("/find/:stock?", async (req, res) => {
   try {
     var stockData = await searchStock(req.params.stock.toString());
-    res.send({ searchedFor: "req.params.stock", matches: stockData });
+    res.send({ searchedFor: req.params.stock, matches: stockData });
   } catch (e) {
     console.log(e);
   }

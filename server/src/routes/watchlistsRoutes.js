@@ -7,7 +7,7 @@ const {
   clearWatchlist,
   deleteWatchlist,
   addStock,
-  getStocks,
+  getStock,
   removeStock,
 } = require("../controllers/watchlistControllers");
 
@@ -17,7 +17,7 @@ router.route("/clear").post(clearWatchlist);
 router.route("/delete").delete(deleteWatchlist);
 
 router.route("/addStock").post(addStock);
-router.route("/getStocks").get(getStocks);
+// router.route("/getStocks").get(getStocks);
 router.route("/removeStock").delete(removeStock);
 
 module.exports = router;
