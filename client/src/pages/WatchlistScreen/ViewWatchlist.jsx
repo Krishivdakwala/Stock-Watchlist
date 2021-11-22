@@ -1,15 +1,115 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axiosApi from "../../api/axiosApi";
+
+import MainScreen from "../../components/MainScreen";
+
+import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ViewWatchlist = (props) => {
   // console.log(props.location.state);
-  const stocks = props.location.state.stocks;
+  const { stockIds, watchlistName } = props.location.state;
+
+  const [stocks, setStocks] = useState([]);
+
+  const fetchStocks = async () => {
+    for (var i in stockIds) {
+      const res = await axiosApi.get(`/markets/${stockIds[i]}`);
+      console.log(res.data);
+      const temp = stocks;
+      temp.push(res.data.data);
+      setStocks(temp);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Running");
+    fetchStocks();
+    console.log("Stocks : ", stocks);
+  }, []);
+
+  var data = <h2>Loading Your Watchlist</h2>;
+
+  if (stocks.length !== 0) {
+    data = (
+      <>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Open</th>
+              <th>High</th>
+              <th>Low</th>
+              <th>Close</th>
+              <th>Volume</th>
+              <th>Dividend</th>
+              <th>Details</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stocks.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td> {index + 1} </td>
+                  <td> {item.stockName}</td>
+                  <td>{item.stockPrices[0].open}</td>
+                  <td>{item.stockPrices[0].high}</td>
+                  <td>{item.stockPrices[0].low}</td>
+                  <td>{item.stockPrices[0].close}</td>
+                  <td>{item.stockPrices[0].volume}</td>
+                  <td>{item.stockPrices[0].dividend}</td>
+                  <th>
+                    <Link
+                      to={{
+                        pathname: "/stocks",
+                        state: {
+                          stockData: item,
+                        },
+                      }}
+                      style={{ textDecoration: "inherit" }}
+                    >
+                      View More
+                    </Link>
+                  </th>
+                  {/* <th>
+                    <Button
+                      to={{
+                        pathname: "/stocks",
+                        state: {
+                          stockData: item,
+                        },
+                      }}
+                      style={{ textDecoration: "inherit" }}
+                    >
+                      Bell Here
+                    </Button>
+
+                    <Button
+                      to={{
+                        pathname: "/stocks",
+                        state: {
+                          stockData: item,
+                        },
+                      }}
+                      style={{ textDecoration: "inherit" }}
+                    >
+                      Remove
+                    </Button>
+                  </th> */}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </>
+    );
+  }
+
   return (
     <div>
-      <h1> Viewing a watchlist</h1>
-
-      {stocks.map((item, index) => {
-        return <div key={index}> {item}</div>;
-      })}
+      <MainScreen title={watchlistName}>{data}</MainScreen>
     </div>
   );
 };

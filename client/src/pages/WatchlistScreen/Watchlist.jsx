@@ -14,6 +14,7 @@ import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
+import { useSelector } from "react-redux";
 
 import axiosApi from "../../api/axiosApi";
 
@@ -54,11 +55,13 @@ const Watchlist = () => {
 
   const [watchlists, getWatchlists] = useState([]);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const fetchWatchlists = async () => {
     await axiosApi
-      .post("/watchlists/view", { userId: "6198bffdee0f932f1901c02f" })
+      .post("/watchlists/view", { userId: userInfo._id })
       .then((response) => {
-        // console.log(response);
         const allwatchlists = response.data.data.watchlist;
         console.log(allwatchlists);
         getWatchlists(() => allwatchlists);
@@ -236,7 +239,8 @@ const Watchlist = () => {
                       to={{
                         pathname: `/watchlists/view`,
                         state: {
-                          stocks: item.stocks,
+                          stockIds: item.stockIds,
+                          watchlistName: item.name,
                         },
                       }}
                       style={{ textDecoration: "inherit" }}

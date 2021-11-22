@@ -12,7 +12,7 @@ const Markets = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   // useEffect(() => {
   //   if (userInfo) {
@@ -24,8 +24,8 @@ const Markets = () => {
     try {
       const stocksData = await axiosApi.get("/markets");
       // console.log(stocksData);
-      setStocks(() => stocksData.data);
-      setDate(() => stocksData.data[0].refreshedOn);
+      setStocks(() => stocksData.data.data);
+      setDate(() => stocksData.data.data[0].refreshedOn);
     } catch (e) {
       console.log(e);
       alert(e);
