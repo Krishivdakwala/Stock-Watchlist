@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { watch } = require("../models/stockModel");
 const Stock = require("../models/stockModel");
 const Watchlist = require("../models/watchlistModel");
 
@@ -8,7 +9,6 @@ const createWatchlist = asyncHandler(async (req, res) => {
     const response = await Watchlist.create({
       userId: userId,
       name: watchlistName,
-      stocks: [],
     });
 
     if (response) {
@@ -40,29 +40,34 @@ const getWatchlists = asyncHandler(async (req, res) => {
   const { userId, watchlistName } = req.body;
 
   try {
-    let response;
+    let watchlist;
     if (watchlistName != undefined) {
-      response = await Watchlist.findOne({
+      watchlist = await Watchlist.findOne({
         userId: userId,
         name: watchlistName,
       });
     } else {
-      response = await Watchlist.find({
+      watchlist = await Watchlist.find({
         userId: userId,
       });
     }
 
-    console.log(response);
+    if (watchlist) {
+      var stocks = [];
 
-    if (response) {
+      for (var i in watchlist.stockIds) {
+        const data = await Stock.findById(watchlist.stockIds[i]);
+        stocks.push(data);
+      }
+
       res.send({
         status: "ok",
         msg: "watchlist fetched",
         data: {
-          watchlist: response,
+          watchlist: watchlist,
+          stocks: stocks,
         },
       });
-      console.log("Watchlist Fetched : ", response);
     } else {
       res.send({ status: "error", msg: "error while fetching watchlists" });
     }
@@ -78,6 +83,7 @@ const clearWatchlist = asyncHandler(async (req, res) => {
       { userId: userId, name: watchlistName },
       {
         $set: {
+          stockIds: [],
           stocks: [],
         },
       }
@@ -117,7 +123,7 @@ const deleteWatchlist = asyncHandler(async (req, res) => {
 
       console.log("Watchlist Deleted ");
     } else {
-      res.send({ status: "Error", msg: "error while removing stock" });
+      res.send({ status: "Error", msg: "error while deleting stock" });
     }
   } catch (err) {
     res.send({ status: "err", msg: err });
@@ -131,7 +137,7 @@ const addStock = asyncHandler(async (req, res) => {
       { $and: [{ userId: userId }, { name: watchlistName }] },
       {
         $addToSet: {
-          stocks: stockId,
+          stockIds: stockId,
         },
       }
     );
@@ -180,7 +186,7 @@ const removeStock = asyncHandler(async (req, res) => {
       { userId: userId, name: watchlistName },
       {
         $pull: {
-          stocks: stockId,
+          stockIds: stockId,
         },
       }
     );
