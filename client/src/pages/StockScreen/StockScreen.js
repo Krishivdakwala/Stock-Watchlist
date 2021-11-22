@@ -4,7 +4,6 @@ import MainScreen from "../../components/MainScreen";
 import { Table } from "react-bootstrap";
 
 const StockScreen = (props) => {
-  // console.log(props.location);
   const stockData = props.location.state.stockData;
   return (
     <MainScreen title="Stock Detail ">
