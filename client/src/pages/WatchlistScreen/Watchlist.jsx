@@ -120,14 +120,14 @@ const Watchlist = () => {
   return (
     <MainScreen title="Watchlists">
       <Fade>
-        <div onClick={handleOpen} style={{ textDecoration: "none" }}>
-          <Grid container direction="row" alignItems="center">
+        <Grid container direction="row" alignItems="center">
+          <div onClick={handleOpen} style={{ textDecoration: "none" }}>
             <Grid item>
               <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />
             </Grid>
             <Grid item>Add</Grid>
-          </Grid>
-        </div>
+          </div>
+        </Grid>
 
         <Modal
           aria-labelledby="simple-modal-title"

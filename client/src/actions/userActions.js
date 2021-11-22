@@ -7,7 +7,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from "../constants/userConstants";
-import axios from "axios";
+import axiosApi from "../api/axiosApi";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -19,8 +19,8 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      "http://localhost:3000/users/login",
+    const { data } = await axiosApi.post(
+      "/users/login",
       { email, password },
       config
     );
@@ -54,8 +54,8 @@ export const register = (name, email, password, pic) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      "http://localhost:3000/users/register",
+    const { data } = await axiosApi.post(
+      "/users/register",
       { name, pic, email, password },
       config
     );

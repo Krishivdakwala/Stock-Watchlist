@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosApi from "../api/axiosApi";
-
+import { useSelector } from "react-redux";
 import MainScreen from "../components/MainScreen";
 import { Table } from "react-bootstrap";
 
 const Markets = () => {
   const [stocks, setStocks] = useState([]);
   const [date, setDate] = useState("");
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  console.log(userInfo);
+
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push("/markets");
+  //   }
+  // }, [history, userInfo]);
+
   const getStocks = async () => {
     try {
       const stocksData = await axiosApi.get("/markets");
@@ -58,17 +70,31 @@ const Markets = () => {
                   <td>{item.stockPrices[0].volume}</td>
                   <td>{item.stockPrices[0].dividend}</td>
                   <th>
-                    <Link
-                      to={{
-                        pathname: "/stocks",
-                        state: {
-                          stockData: item,
-                        },
-                      }}
-                      style={{ textDecoration: "inherit" }}
-                    >
-                      View More
-                    </Link>
+                    {userInfo ? (
+                      <Link
+                        to={{
+                          pathname: "/stocks",
+                          state: {
+                            stockData: item,
+                          },
+                        }}
+                        style={{ textDecoration: "inherit" }}
+                      >
+                        View More
+                      </Link>
+                    ) : (
+                      <Link
+                        to={{
+                          pathname: "/login",
+                          state: {
+                            stockData: item,
+                          },
+                        }}
+                        style={{ textDecoration: "inherit" }}
+                      >
+                        Login To View More
+                      </Link>
+                    )}
                   </th>
                 </tr>
               );

@@ -18,7 +18,7 @@ const LoginScreen = ({ history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/watchlists");
+      history.push("/markets");
     }
   }, [history, userInfo]);
 
@@ -52,7 +52,7 @@ const LoginScreen = ({ history }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-
+          <br />
           <Button variant="primary" type="submit">
             Submit
           </Button>
