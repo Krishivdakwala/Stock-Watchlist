@@ -11,7 +11,7 @@ const Markets = () => {
   const getStocks = async () => {
     try {
       const stocksData = await axiosApi.get("/markets");
-      console.log(stocksData);
+      // console.log(stocksData);
       setStocks(() => stocksData.data);
       setDate(() => stocksData.data[0].refreshedOn);
     } catch (e) {

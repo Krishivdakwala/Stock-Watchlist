@@ -9,7 +9,7 @@ const NewsScreen = () => {
   const getNews = async (req, res) => {
     try {
       const newsData = await axiosApi.get("/news");
-      //   console.log(newsData.data);
+      console.log(newsData.data);
       setNews(() => newsData.data.articles);
     } catch (error) {
       console.log(error);
@@ -21,11 +21,13 @@ const NewsScreen = () => {
     getNews();
   }, []);
 
-  return (
-    <MainScreen title="Top News">
+  var newsCar = <h2>Loading Your Top News</h2>;
+
+  if (news) {
+    newsCar = (
       <Carousel interval={3000} controls={true}>
         {news?.map((item, index) => (
-          <Carousel.Item>
+          <Carousel.Item key={index}>
             <img
               className="d-block w-100"
               src={item.urlToImage}
@@ -56,8 +58,10 @@ const NewsScreen = () => {
           </Carousel.Item>
         ))}
       </Carousel>
-    </MainScreen>
-  );
+    );
+  }
+
+  return <MainScreen title="Top News">{newsCar}</MainScreen>;
 };
 
 export default NewsScreen;
