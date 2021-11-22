@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ViewWatchlist from "./pages/WatchlistScreen/ViewWatchlist";
 import NewsScreen from "./pages/NewsScreen/NewsScreen";
+import StockScreen from "./pages/StockScreen/StockScreen";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route exact path="/news" component={NewsScreen} />
           <Route exact path="/watchlists/view" component={ViewWatchlist} />
           <Route exact path="/watchlists" component={Watchlist} />
+          <Route exact path="/stocks" component={StockScreen} />
         </Switch>
       </div>
       <Footer />
