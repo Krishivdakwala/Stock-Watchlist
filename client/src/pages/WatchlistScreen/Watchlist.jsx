@@ -123,12 +123,11 @@ const Watchlist = () => {
   return (
     <MainScreen title="Watchlists">
       <Fade>
-        <Grid container direction="row" alignItems="center">
-          <div onClick={handleOpen} style={{ textDecoration: "none" }}>
-            <Grid item>
-              <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />
-            </Grid>
-            <Grid item>Add</Grid>
+        <Grid container direction="column" alignItems="center">
+          <div onClick={handleOpen} style={{ textDecoration: "none", cursor: "pointer" }}>
+            
+              <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />   
+                Add
           </div>
         </Grid>
 
