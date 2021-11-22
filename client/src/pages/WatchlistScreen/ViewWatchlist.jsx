@@ -9,18 +9,16 @@ import Grid from "@material-ui/core/Grid";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import AddIcon from '@material-ui/icons/Add';
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+  width: `${top}`
   };
 }
 
@@ -29,13 +27,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+
   },
   paper: {
     position: "absolute",
-    width: 450,
+    width: 600,
+    height: 600,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflow: 'scroll'
   },
 }));
 
@@ -81,6 +82,11 @@ const ViewWatchlist = (props) => {
       setStocks(() => temp);
     }
     setLoading(false);
+  };
+
+  const addStock = async (item) => {
+    console.log(item)
+    handleClose();
   };
 
   useEffect(() => {
@@ -133,21 +139,13 @@ const ViewWatchlist = (props) => {
                             <tr key={index}>
                               <td> {index + 1} </td>
                               <td> {item.stockName}</td>
-                              {/* <th>
+                              <th>
                                 
-                                  <Link
-                                    to={{
-                                      pathname: "/stocks",
-                                      state: {
-                                        stockData: item,
-                                      },
-                                    }}
-                                    style={{ textDecoration: "inherit" }}
-                                  >
-                                    View More
-                                  </Link>
+                                  <Button onClick={() => addStock(item)} style={{padding:0}}>
+                                    <AddIcon fontSize="large" />
+                                  </Button>
                                  
-                              </th> */}
+                              </th>
                             </tr>
                           );
                         })}
