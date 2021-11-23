@@ -194,7 +194,8 @@ const Watchlist = () => {
                   }}
                   whileHover={{
                     boxShadow: "3px 2px 2px  aqua",
-                    scale: "1.1",
+                    width: "330px",
+                    height: "165px",
                     transition:
                       "transform 6s cubic-bezier(0.075, 0.82, 0.165, 1)",
                   }}
@@ -220,7 +221,6 @@ const Watchlist = () => {
                     > */}
                     <div style={{ width: "270px" }}>
                       <h2>{item.name}</h2>
-                      <p>{item.userId}</p>
                     </div>
                     {/* </Link> */}
                   </motion.div>
@@ -242,7 +242,14 @@ const Watchlist = () => {
                       }}
                       style={{ textDecoration: "inherit" }}
                     >
-                      <EditIcon />
+                      <EditIcon 
+                        style={{
+                        textDecoration: "none",
+                        color: "#ffffff",
+                        margin: "5px",
+                        
+                        }}
+                      />
                     </Link>
 
                     <DeleteIcon

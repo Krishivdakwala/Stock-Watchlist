@@ -83,7 +83,7 @@ const RegisterScreen = ({ history }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-
+          <br />
           <Button variant="primary" type="submit">
             Register
           </Button>

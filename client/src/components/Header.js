@@ -19,9 +19,9 @@ const Header = ({ setSearch }) => {
   useEffect(() => {}, [userInfo]);
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
-        <Navbar.Brand href="/">Stock Watchlist</Navbar.Brand>
+        <Navbar.Brand href="/">Stockerzz</Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

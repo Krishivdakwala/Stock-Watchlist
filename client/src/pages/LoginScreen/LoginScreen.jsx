@@ -54,7 +54,7 @@ const LoginScreen = ({ history }) => {
           </Form.Group>
           <br />
           <Button variant="primary" type="submit">
-            Submit
+            Login
           </Button>
         </Form>
         <Row className="py-3">
