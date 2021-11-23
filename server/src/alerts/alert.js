@@ -27,11 +27,14 @@ const welcomeMail = (email, name) => {
         </ul>
     
         <h4>We hope that you enjoy our services.
-            <br>
-            <br>Thank You!!
-            <br>
-            <br>Regards,
-            <br>Stock market
+          <h2>Regards,</h2>
+          <h2>Stockerzz : A Project By</h2>
+          <h3>Akash Kulkarni</h3>
+          <h3>Krishiv Dakwala</h3>
+          <h3>Zain</h3>
+          <h3>Ashish Patil</h3>
+
+          <h2>Happy Researching :) </h2>
         </h4>
       </div>
     `,
@@ -49,7 +52,7 @@ const welcomeMail = (email, name) => {
 const newsMail = (email, name) => {
   var mailOptions = {
     from: "entrepreneur2021auction@gmail.com",
-    to: "akash213kulkarni@gmail.com",
+    to: email,
     subject: "Welcome OnBoard !!",
     html: `
       <div>
@@ -57,11 +60,16 @@ const newsMail = (email, name) => {
         <h2>Greetings of the day!!</h2>
         <h4>Don't miss out on latest updates. Catch all the latest activity on the news tab. <br>
             Have a great day!!
-            <br>
-            <br>Regards,
-            
-            <br>Stock market
         </h4>
+
+        <h2>Regards,</h2>
+        <h2>Stockerzz : A Project By</h2>
+        <h3>Akash Kulkarni</h3>
+        <h3>Krishiv Dakwala</h3>
+        <h3>Zain</h3>
+        <h3>Ashish Patil</h3>
+
+        <h2>Happy Researching :) </h2>
       </div>
     `,
   };
@@ -75,18 +83,27 @@ const newsMail = (email, name) => {
   });
 };
 
-const watchlistMail = (email, name) => {
+const watchlistMail = (name, email, watchlistName) => {
   var mailOptions = {
     from: "entrepreneur2021auction@gmail.com",
-    to: "akash213kulkarni@gmail.com",
-    subject: "Welcome OnBoard !!",
+    to: email,
+    subject: "Watchlist Created !!",
     html: `
       <div>
         <h1>Hello ${name}</h1>
 
-        <h2>Akash Kulkarni</h2>
+        <h2>This is to inform you that a new watchlist named ${watchlistName} has been created in your account.</h2>
+        <h3>For more details, login into your account.</h3>
+        <br/>  
 
-        <h4> Happy Investing </h4>
+        <h2>Regards,</h2>
+        <h2>Stockerzz : A Project By</h2>
+        <h3>Akash Kulkarni</h3>
+        <h3>Krishiv Dakwala</h3>
+        <h3>Zain</h3>
+        <h3>Ashish Patil</h3>
+
+        <h2>Happy Researching :) </h2>
       </div>
     `,
   };
@@ -103,7 +120,7 @@ const watchlistMail = (email, name) => {
 const alertMail = (email, name) => {
   var mailOptions = {
     from: "entrepreneur2021auction@gmail.com",
-    to: "akash213kulkarni@gmail.com",
+    to: email,
     subject: "Alert on your Watchlist ! Check Now !!",
     html: `
       <div>

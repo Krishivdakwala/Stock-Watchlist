@@ -1,11 +1,15 @@
 const asyncHandler = require("express-async-handler");
-const { watch } = require("../models/stockModel");
+const { watchlistMail } = require("../alerts/alert");
+const User = require("../models/userModel");
 const Stock = require("../models/stockModel");
 const Watchlist = require("../models/watchlistModel");
 
 const createWatchlist = asyncHandler(async (req, res) => {
   const { userId, watchlistName } = req.body;
   try {
+    const userInfo = await User.findById(userId);
+    console.log(userInfo);
+
     const response = await Watchlist.create({
       userId: userId,
       name: watchlistName,
@@ -20,6 +24,7 @@ const createWatchlist = asyncHandler(async (req, res) => {
           watchlistName: watchlistName,
         },
       });
+      watchlistMail(userInfo.name, userInfo.email, watchlistName);
     } else {
       res.send({ status: "error", msg: "error while creating watchlist" });
     }
