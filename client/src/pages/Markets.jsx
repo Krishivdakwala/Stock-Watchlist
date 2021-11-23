@@ -12,14 +12,6 @@ const Markets = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  // console.log(userInfo);
-
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push("/markets");
-  //   }
-  // }, [history, userInfo]);
-
   const getStocks = async () => {
     try {
       const stocksData = await axiosApi.get("/markets");
@@ -46,7 +38,7 @@ const Markets = () => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
+              <th>Sr.No</th>
               <th>Name</th>
               <th>Open</th>
               <th>High</th>

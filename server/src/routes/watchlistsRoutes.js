@@ -16,10 +16,10 @@ router.route("/create").post(createWatchlist);
 router.route("/view").post(getWatchlists);
 
 router.route("/clear").post(clearWatchlist);
-router.route("/delete").delete(deleteWatchlist);
+router.route("/delete").post(deleteWatchlist);
 
 router.route("/addStock").post(addStock);
 // router.route("/getStocks").get(getStocks);
-router.route("/removeStock").delete(removeStock);
+router.route("/removeStock").post(removeStock);
 
 module.exports = router;

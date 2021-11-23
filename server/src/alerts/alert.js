@@ -11,7 +11,7 @@ var transporter = nodemailer.createTransport({
 const welcomeMail = (email, name) => {
   var mailOptions = {
     from: "entrepreneur2021auction@gmail.com",
-    to: "akash213kulkarni@gmail.com",
+    to: email,
     subject: "Welcome OnBoard !!",
     html: `
       <div>

@@ -110,7 +110,7 @@ const ViewWatchlist = (props) => {
   const removeStock = async (item) => {
     setLoading(true);
     try {
-      const res = await axiosApi.delete("/watchlists/removeStock", {
+      const res = await axiosApi.post("/watchlists/removeStock", {
         userId: userInfo._id,
         watchlistName: watchlistName,
         stockId: item._id,

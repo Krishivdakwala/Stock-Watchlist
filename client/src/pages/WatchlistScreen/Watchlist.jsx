@@ -78,7 +78,7 @@ const Watchlist = () => {
     console.log("Created", watchlistName);
     await axiosApi
       .post("/watchlists/create", {
-        userId: "6198bffdee0f932f1901c02f",
+        userId: userInfo._id,
         watchlistName: watchlistName,
       })
       .then((response) => {
@@ -95,8 +95,8 @@ const Watchlist = () => {
   const deleteHandler = async (name) => {
     console.log("Deleting", name);
     await axiosApi
-      .delete("/watchlists/delete", {
-        userId: "6198bffdee0f932f1901c02f",
+      .post("/watchlists/delete", {
+        userId: userInfo._id,
         watchlistName: name,
       })
       .then((response) => {
@@ -144,7 +144,7 @@ const Watchlist = () => {
                 value={watchlistName}
                 placeholder="Watchlist Name"
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  // console.log(e.target.value);
                   setWatchlistName(e.target.value);
                 }}
               />
@@ -237,25 +237,22 @@ const Watchlist = () => {
                       to={{
                         pathname: `/watchlists/view`,
                         state: {
-                          // stockIds: item.stockIds,
                           watchlistName: item.name,
-                          // stocks: [],
                         },
                       }}
                       style={{ textDecoration: "inherit" }}
                     >
                       <EditIcon />
                     </Link>
-                    <Button
+
+                    <DeleteIcon
                       onClick={() => deleteHandler(item.name)}
                       style={{
                         textDecoration: "none",
-                        color: "#303F9F",
+                        color: "#ffffff",
                         margin: "5px",
                       }}
-                    >
-                      <DeleteIcon />
-                    </Button>
+                    />
                   </div>
                 </motion.div>
               );
