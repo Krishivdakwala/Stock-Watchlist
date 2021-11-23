@@ -10,15 +10,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import Grid from "@material-ui/core/Grid";
 import { TextField } from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { useSelector } from "react-redux";
 
 import axiosApi from "../../api/axiosApi";
-
-
 
 function getModalStyle() {
   const top = 50;
@@ -27,7 +25,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-    width: `${top}`
+    width: `${top}`,
   };
 }
 
@@ -123,10 +121,12 @@ const Watchlist = () => {
     <MainScreen title="Watchlists">
       <Fade>
         <Grid container direction="column" alignItems="center">
-          <div onClick={handleOpen} style={{ textDecoration: "none", cursor: "pointer" }}>
-            
-              <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />   
-                Add
+          <div
+            onClick={handleOpen}
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />
+            Add
           </div>
         </Grid>
 
@@ -237,8 +237,9 @@ const Watchlist = () => {
                       to={{
                         pathname: `/watchlists/view`,
                         state: {
-                          stockIds: item.stockIds,
+                          // stockIds: item.stockIds,
                           watchlistName: item.name,
+                          // stocks: [],
                         },
                       }}
                       style={{ textDecoration: "inherit" }}
@@ -259,15 +260,6 @@ const Watchlist = () => {
                 </motion.div>
               );
             })}
-
-            {/* {watchlists.map((item) => {
-              return (
-                <div key={item._id}>
-                  <h1>123- {item.name}</h1>
-                  <h2>{item.userId}</h2>
-                </div>
-              );
-            })} */}
           </div>
         </div>
       </Fade>

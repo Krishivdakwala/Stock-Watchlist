@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axiosApi from "../../api/axiosApi";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 import MainScreen from "../../components/MainScreen";
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { Table, Button, Form, Dropdown, DropdownButton} from "react-bootstrap";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import { Table, Button, Form, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add";
+
+import { useSelector } from "react-redux";
 
 function getModalStyle() {
   const top = 50;
@@ -18,7 +20,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  width: `${top}`
+    width: `${top}`,
   };
 }
 
@@ -27,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
   },
   paper: {
     position: "absolute",
@@ -36,27 +37,25 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    overflow: 'scroll'
+    overflow: "scroll",
   },
 }));
 
-
 const ViewWatchlist = (props) => {
   const classes = useStyles();
-  // console.log(props.location.state);
-  const { stockIds, watchlistName } = props.location.state;
+  const { watchlistName } = props.location.state;
   const [allStocks, setAllStocks] = useState([]);
-  const [stocks, setStocks] = useState([]);
+  const [myStocks, setMyStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
-  const [date, setDate] = useState("");
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const getAllStocks = async () => {
     try {
       const stocksData = await axiosApi.get("/markets");
       setAllStocks(() => stocksData.data.data);
-      setDate(() => stocksData.data.data[0].refreshedOn);
     } catch (e) {
       console.log(e);
       alert(e);
@@ -70,47 +69,87 @@ const ViewWatchlist = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  
 
-  const fetchStocks = async () => {
+  const getWatchlist = async () => {
     setLoading(true);
-    for (var i in stockIds) {
-      const res = await axiosApi.get(`/markets/${stockIds[i]}`);
-      // console.log(res.data);
-      const temp = stocks;
-      temp.push(res.data.data);
-      setStocks(() => temp);
+    try {
+      const res = await axiosApi.post(`/watchlists/view`, {
+        userId: userInfo._id,
+        watchlistName: watchlistName,
+      });
+
+      console.log("Watchlist : ", res.data);
+      setMyStocks(() => res.data.data.stocks);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const addStock = async (item) => {
-    console.log(item)
-    handleClose();
+    setLoading(true);
+    try {
+      const res = await axiosApi.post("/watchlists/addStock", {
+        userId: userInfo._id,
+        watchlistName: watchlistName,
+        stockId: item._id,
+      });
+      console.log(res);
+      setLoading(false);
+      getWatchlist();
+      handleClose();
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+      alert(e);
+    }
+  };
+
+  const removeStock = async (item) => {
+    setLoading(true);
+    try {
+      const res = await axiosApi.delete("/watchlists/removeStock", {
+        userId: userInfo._id,
+        watchlistName: watchlistName,
+        stockId: item._id,
+      });
+      console.log(res);
+      setLoading(false);
+      getWatchlist();
+      handleClose();
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+      alert(e);
+    }
+  };
+
+  const notifyStock = async (item) => {
+    console.log(item);
   };
 
   useEffect(() => {
-    fetchStocks();
+    getWatchlist();
     getAllStocks();
-  }, [stocks]);
+  }, []);
 
   var data;
   if (loading === true) {
     data = <h2>Loading Your Watchlist</h2>;
   } else {
-    if (stocks.length === 0) {
-      data = <h2>Watchlist is Empty !!</h2>;
-    } else {
-      data = (
-        <>
-          <Grid container direction="column" alignItems="center">
-            <div onClick={handleOpen} style={{ textDecoration: "none", cursor: "pointer" }}>
-              
-                <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />
-              
-                Add Stock
-            </div>
-          </Grid>
+    var data1 = (
+      <>
+        <Grid container direction="column" alignItems="center">
+          <div
+            onClick={handleOpen}
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <AddCircleIcon fontSize="large" style={{ fill: "blue" }} />
+            Add Stock
+          </div>
+        </Grid>
 
         <Modal
           aria-labelledby="simple-modal-title"
@@ -121,45 +160,52 @@ const ViewWatchlist = (props) => {
           <div style={modalStyle} className={classes.paper}>
             <h2>Select Stock to Add</h2>
             {
-
-                (
-                  <div>
-        
-                    <br />
-                    <Table striped bordered hover>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Name</th>
+              <div>
+                <br />
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Sr.No</th>
+                      <th>Name</th>
+                      <th>Add</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allStocks.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td> {index + 1} </td>
+                          <td> {item.stockName}</td>
+                          <th>
+                            <AddIcon
+                              onClick={() => addStock(item)}
+                              style={{ padding: 0 }}
+                              fontSize="large"
+                            />
+                          </th>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {allStocks.map((item, index) => {
-                          return (
-                            <tr key={index}>
-                              <td> {index + 1} </td>
-                              <td> {item.stockName}</td>
-                              <th>
-                                
-                                  <Button onClick={() => addStock(item)} style={{padding:0}}>
-                                    <AddIcon fontSize="large" />
-                                  </Button>
-                                 
-                              </th>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </Table>
-                  </div>
-                )
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </div>
             }
-            
-            
           </div>
         </Modal>
-
-
+      </>
+    );
+    if (myStocks.length === 0) {
+      var data = (
+        <>
+          {data1}
+          <br />
+          <h2>Watchlist is Empty !!</h2>
+        </>
+      );
+    } else {
+      data = (
+        <>
+          {data1}
           <br />
           <Table striped bordered hover>
             <thead>
@@ -177,7 +223,7 @@ const ViewWatchlist = (props) => {
               </tr>
             </thead>
             <tbody>
-              {stocks.map((item, index) => {
+              {myStocks.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td> {index + 1} </td>
@@ -202,29 +248,25 @@ const ViewWatchlist = (props) => {
                       </Link>
                     </th>
                     <th>
-                      <Button
-                        to={{
-                          pathname: "/stocks",
-                          state: {
-                            stockData: item,
-                          },
+                      <NotificationsIcon
+                        onClick={() => notifyStock(item)}
+                        style={{
+                          textDecoration: "inherit",
+                          marginRight: 10,
+                          cursor: "pointer",
+                          color: "blue",
                         }}
-                        style={{ textDecoration: "inherit", marginRight:10 }}
-                      >
-                        <NotificationsIcon />
-                      </Button>
-  
-                      <Button
-                        to={{
-                          pathname: "/stocks",
-                          state: {
-                            stockData: item,
-                          },
+                      />
+
+                      <DeleteIcon
+                        onClick={() => removeStock(item)}
+                        style={{
+                          textDecoration: "inherit",
+                          marginRight: 10,
+                          cursor: "pointer",
+                          color: "blue",
                         }}
-                        style={{ textDecoration: "inherit" }}
-                      >
-                        <DeleteIcon />
-                      </Button>
+                      />
                     </th>
                   </tr>
                 );
