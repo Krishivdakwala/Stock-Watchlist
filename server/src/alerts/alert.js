@@ -31,7 +31,7 @@ const welcomeMail = (email, name) => {
           <h2>Stockerzz : A Project By</h2>
           <h3>Akash Kulkarni</h3>
           <h3>Krishiv Dakwala</h3>
-          <h3>Zain</h3>
+          <h3>Zain Shaikh</h3>
           <h3>Ashish Patil</h3>
 
           <h2>Happy Researching :) </h2>
@@ -66,7 +66,7 @@ const newsMail = (email, name) => {
         <h2>Stockerzz : A Project By</h2>
         <h3>Akash Kulkarni</h3>
         <h3>Krishiv Dakwala</h3>
-        <h3>Zain</h3>
+        <h3>Zain Shaikh</h3>
         <h3>Ashish Patil</h3>
 
         <h2>Happy Researching :) </h2>
@@ -100,7 +100,7 @@ const watchlistMail = (name, email, watchlistName) => {
         <h2>Stockerzz : A Project By</h2>
         <h3>Akash Kulkarni</h3>
         <h3>Krishiv Dakwala</h3>
-        <h3>Zain</h3>
+        <h3>Zain Shaikh</h3>
         <h3>Ashish Patil</h3>
 
         <h2>Happy Researching :) </h2>
