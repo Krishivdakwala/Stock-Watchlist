@@ -128,6 +128,9 @@ const ViewWatchlist = (props) => {
 
   const notifyStock = async (item) => {
     console.log(item);
+    alert(
+      "Alert created for this stock. You will get notifications of updates via mail."
+    );
   };
 
   useEffect(() => {
